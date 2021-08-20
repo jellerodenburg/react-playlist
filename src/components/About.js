@@ -5,7 +5,7 @@ function About(props) {
         <div id="about" className={props.aboutClass}>
             <div className="about-text">
                 <h3>About this app</h3>
-                <em>Click the table headers (Title, Artist, Genre, Rating) to sort.</em>
+                <em>❕ Click the table headers (Title, Artist, Genre, Rating) to sort.</em>
                 <p>This app was built in React as an excerise using state and input elements.
                     I have used concepts I learned from Bob Ziroll's Scrimba course about React.</p>
                 <p>While building this app I found out that with
@@ -20,6 +20,7 @@ function About(props) {
                     but also based on the number of emoji's in a string
                     (like the stars I used in this app for the rating).
                 </p>
+                <p>Just for fun I added the option to search for the songs on YouTube. 😁 </p>
             </div>
         </div>
     )
