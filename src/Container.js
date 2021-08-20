@@ -10,66 +10,24 @@ class Container extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            songItems: initialSongsData,
+            aboutClass: "",
             filteredSongItems: initialSongsData,
             filterGenre: "",
-            counter: 14,
+            idCounter: 14,
+            lastSort: "descending",
             newSongTitle: "",
             newSongArtist: "",
             newSongGenre: "",
             newSongRating: "",
-            aboutClass: ""
+            songItems: initialSongsData
         }
         this.aboutLinkClick = this.aboutLinkClick.bind(this)
         this.addNewItem = this.addNewItem.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
-        this.sortSongList = this.sortSongList.bind(this)
         this.handleSelectDisplayGenre = this.handleSelectDisplayGenre.bind(this)
+        this.sortSongList = this.sortSongList.bind(this)
     }
-
-    handleChange(event) {
-        const { name, value } = event.target
-        this.setState({
-            [name]: value
-        })
-        console.log(name)
-    }
-
-    log = () => {
-        console.log(this.state.filteredSongItems)
-        console.log(this.state.songItems)
-    }
-
-    handleSelectDisplayGenre(event) {
-        const { name, value } = event.target
-        if (value == "") {
-            this.setState({
-                [name]: value
-            }, this.setState({
-                filteredSongItems: this.state.songItems
-            }, this.log))
-        } else {
-            this.setState({
-                [name]: value
-            }, this.setState({
-                filteredSongItems: this.state.songItems.filter(item => item.genre === value)
-            }, this.log))
-        }
-    }
-
-    sortSongList(property) {
-        const sorted = this.state.filteredSongItems.sort((a, b) => {
-            return a[property].localeCompare(b[property])
-        });
-        this.setState({ filteredSongItems: sorted })
-    };
-
-    handleDelete(itemId) {
-        const updatedSongList = this.state.songItems.filter
-            (item => item.id !== itemId);
-        this.setState({ songItems: updatedSongList })
-    };
 
     aboutLinkClick() {
         if (this.state.aboutClass === '') {
@@ -86,7 +44,7 @@ class Container extends React.Component {
 
     addNewItem() {
         const newSongId = {
-            id: this.state.counter + 1,
+            id: this.state.idCounter + 1
         }
         const newSongInput = {
             title: this.state.newSongTitle,
@@ -94,8 +52,8 @@ class Container extends React.Component {
             genre: this.state.newSongGenre,
             rating: this.state.newSongRating
         }
-        const inputIsEmpty = Object.values(newSongInput).some(x => (x === ''));
-        if (inputIsEmpty) {
+        const someInputIsEmpty = Object.values(newSongInput).some(x => (x === ''));
+        if (someInputIsEmpty) {
             alert("Please type in Song Title and Artist Name \r\nSelect a Genre and Rating")
         } else {
             this.setState(prevState => ({
@@ -103,10 +61,13 @@ class Container extends React.Component {
                     [
                         ...prevState.songItems,
                         { ...newSongId, ...newSongInput }
-                    ]
-            }))
-            this.setState(prevState => ({
-                counter: prevState.counter + 1
+                    ],
+                filteredSongItems:
+                    [
+                        ...prevState.filteredSongItems,
+                        { ...newSongId, ...newSongInput }
+                    ],
+                idCounter: prevState.idCounter + 1
             }))
             this.clearInputFields()
         }
@@ -120,6 +81,57 @@ class Container extends React.Component {
             newSongRating: ""
         })
     }
+
+    handleChange(event) {
+        const { name, value } = event.target
+        this.setState({
+            [name]: value
+        })
+        console.log(name)
+    }
+
+    handleDelete(itemId) {
+        const updatedSongList = this.state.songItems.filter
+            (item => item.id !== itemId);
+        const updatedFilteredSongList = this.state.filteredSongItems.filter
+            (item => item.id !== itemId);
+        this.setState({
+            songItems: updatedSongList,
+            filteredSongItems: updatedFilteredSongList
+        })
+    };
+
+    handleSelectDisplayGenre(event) {
+        const { name, value } = event.target
+        if (value === "") {
+            this.setState({
+                [name]: value
+            }, this.setState({
+                filteredSongItems: this.state.songItems
+            }))
+        } else {
+            this.setState({
+                [name]: value
+            }, this.setState({
+                filteredSongItems: this.state.songItems.filter(item => item.genre === value)
+            }))
+        }
+    }
+
+    sortSongList(property) {
+        if (this.state.lastSort === "descending") {
+            const sortedAscending = this.state.filteredSongItems.sort((a, b) => {
+                return a[property].localeCompare(b[property])
+            });
+            this.setState({ filteredSongItems: sortedAscending, lastSort: "ascending" })
+        } else {
+            const sortedDescending = this.state.filteredSongItems.sort((a, b) => {
+                return b[property].localeCompare(a[property])
+            });
+            this.setState({ filteredSongItems: sortedDescending, lastSort: "descending" })
+        }
+    };
+
 
     render() {
         return (
@@ -135,14 +147,14 @@ class Container extends React.Component {
                     newSongRating={this.state.newSongRating}
                 />
                 <SongList
-                    handleSelectDisplayGenre={this.handleSelectDisplayGenre}
-                    andleDelete={this.handleDelete}
-                    songItems={this.state.songItems}
-                    sortSongList={this.sortSongList}
                     filterGenre={this.filterGenre}
                     filteredSongItems={this.state.filteredSongItems}
+                    handleDelete={this.handleDelete}
+                    handleSelectDisplayGenre={this.handleSelectDisplayGenre}
+                    songItems={this.state.songItems}
+                    sortSongList={this.sortSongList}
                 />
-            </div >
+            </div>
         )
     }
 }

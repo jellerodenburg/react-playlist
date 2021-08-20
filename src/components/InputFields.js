@@ -9,7 +9,7 @@ function InputFields(props) {
                 value={props.newSongTitle}
                 onChange={props.handleChange}
                 name="newSongTitle"
-                autoFocus={true}
+                autoFocus
             />
 
             <input
@@ -51,7 +51,11 @@ function InputFields(props) {
                 <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
             </select>
 
-            <button onClick={() => { props.addNewItem(props.newTitleInput) }}>Add song</button>
+            <button
+                onClick={() => { props.addNewItem(props.newTitleInput) }}
+                id="add-song-button"
+            >Add song
+            </button>
 
         </div>
     )

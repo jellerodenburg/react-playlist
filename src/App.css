@@ -5,6 +5,10 @@
   background-color: rgb(51, 51, 51);
 }
 
+a {
+  color: white;
+}
+
 .nav {
   display: flex;
   align-items: baseline;
@@ -57,10 +61,6 @@
   text-align: left;
 }
 
-a {
-  color: white;
-}
-
 button {
   display: inline-block;
   border: none;
@@ -94,6 +94,10 @@ th, td {
   padding: 10px 10px;
 }
 
+th {
+  user-select: none;
+}
+
 input, select {
   padding: 10px 20px;
   border-radius: 8px;
@@ -109,4 +113,13 @@ code {
   color: white;
   padding: 2px 5px;
   margin: 8px;
+}
+
+#display-genre-select {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+#add-song-button {
+  margin-left: 20px;
 }

@@ -5,7 +5,7 @@ function About(props) {
         <div id="about" className={props.aboutClass}>
             <div className="about-text">
                 <h3>About this app</h3>
-                <p>Click the table headers (Title, Artist, Genre, Rating) to sort.</p>
+                <em>Click the table headers (Title, Artist, Genre, Rating) to sort.</em>
                 <p>This app was built in React as an excerise using state and input elements.
                     I have used concepts I learned from Bob Ziroll's Scrimba course about React.</p>
                 <p>While building this app I found out that with
