@@ -25,7 +25,7 @@
  #about {
   color: rgb(51, 51, 51);
   text-align: left;
-  padding: 10px 40px 10px 20px;
+  padding: 0px 40px 0px 20px;
   height: 0;
   transition: 0.5s;
   overflow: hidden;
@@ -47,13 +47,14 @@
   flex-wrap: wrap;
   gap: 10px;
   padding: 20px;
-  background-color: rgb(51, 51, 51);
+  background-color: #464646;
 }
 
 .song-list {
   padding: 20px;
   background-color: rgb(51, 51, 51);
   max-width: fit-content;
+  text-align: left;
 }
 
 a {

@@ -11,6 +11,8 @@ class Container extends React.Component {
         super(props)
         this.state = {
             songItems: initialSongsData,
+            filteredSongItems: initialSongsData,
+            filterGenre: "",
             counter: 14,
             newSongTitle: "",
             newSongArtist: "",
@@ -23,13 +25,44 @@ class Container extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.sortSongList = this.sortSongList.bind(this)
+        this.handleSelectDisplayGenre = this.handleSelectDisplayGenre.bind(this)
+    }
+
+    handleChange(event) {
+        const { name, value } = event.target
+        this.setState({
+            [name]: value
+        })
+        console.log(name)
+    }
+
+    log = () => {
+        console.log(this.state.filteredSongItems)
+        console.log(this.state.songItems)
+    }
+
+    handleSelectDisplayGenre(event) {
+        const { name, value } = event.target
+        if (value == "") {
+            this.setState({
+                [name]: value
+            }, this.setState({
+                filteredSongItems: this.state.songItems
+            }, this.log))
+        } else {
+            this.setState({
+                [name]: value
+            }, this.setState({
+                filteredSongItems: this.state.songItems.filter(item => item.genre === value)
+            }, this.log))
+        }
     }
 
     sortSongList(property) {
-        const sorted = this.state.songItems.sort((a, b) => {
+        const sorted = this.state.filteredSongItems.sort((a, b) => {
             return a[property].localeCompare(b[property])
         });
-        this.setState({ songItems: sorted })
+        this.setState({ filteredSongItems: sorted })
     };
 
     handleDelete(itemId) {
@@ -49,13 +82,6 @@ class Container extends React.Component {
                 aboutClass: '',
             })
         }
-    }
-
-    handleChange(event) {
-        const { name, value } = event.target
-        this.setState({
-            [name]: value
-        })
     }
 
     addNewItem() {
@@ -109,9 +135,12 @@ class Container extends React.Component {
                     newSongRating={this.state.newSongRating}
                 />
                 <SongList
-                    handleDelete={this.handleDelete}
+                    handleSelectDisplayGenre={this.handleSelectDisplayGenre}
+                    andleDelete={this.handleDelete}
                     songItems={this.state.songItems}
                     sortSongList={this.sortSongList}
+                    filterGenre={this.filterGenre}
+                    filteredSongItems={this.state.filteredSongItems}
                 />
             </div >
         )

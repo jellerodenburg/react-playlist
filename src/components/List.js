@@ -3,7 +3,7 @@ import ListItem from "./ListItem"
 
 function List(props) {
     const handleDelete = props.handleDelete
-    const listItems = props.songItems.map(function (item) {
+    const listItems = props.filteredSongItems.map(function (item) {
         return <ListItem
             key={item.id}
             id={item.id}
